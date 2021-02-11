@@ -1,0 +1,7 @@
+﻿/.vs/BExpress.Api
+/BExpress.Api/obj
+/BExpress.Core/obj
+/BExpress.Infra/obj
+/BExpress.Api/bin/Debug/net5.0
+/BExpress.Core/bin/Debug/netcoreapp3.1
+/BExpress.Infra/bin/Debug/netcoreapp3.1
