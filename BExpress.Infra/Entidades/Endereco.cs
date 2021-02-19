@@ -1,4 +1,4 @@
-﻿namespace BExpress.Core.Entidades
+﻿namespace BExpress.Infra.Entidades
 {
     public class Endereco : EntidadePadrao
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BExpress.Core.Entidades
+namespace BExpress.Infra.Entidades
 {
     public abstract class EntidadePadrao
     {

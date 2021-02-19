@@ -5,3 +5,6 @@
 /BExpress.Api/bin/Debug/net5.0
 /BExpress.Core/bin/Debug/netcoreapp3.1
 /BExpress.Infra/bin/Debug/netcoreapp3.1
+/.vs/BExpress.Back
+/BExpress.Specification/bin/Debug/netcoreapp3.1
+/BExpress.Specification/obj

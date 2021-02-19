@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace BExpress.Core.Entidades
+namespace BExpress.Infra.Entidades
 {
     public class Pessoa : EntidadePadrao
     {

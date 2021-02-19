@@ -1,4 +1,4 @@
-﻿using BExpress.Core.Entidades;
+﻿using BExpress.Infra.Entidades;
 using Microsoft.EntityFrameworkCore;
 
 namespace BExpress.Infra.Context
@@ -10,5 +10,12 @@ namespace BExpress.Infra.Context
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<ItemVenda> ItemVendas { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
     }
 }

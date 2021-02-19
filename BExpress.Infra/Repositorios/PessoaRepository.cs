@@ -5,10 +5,10 @@ using BExpress.Infra.Repositorios.Interfaces;
 
 namespace BExpress.Infra.Repositorios
 {
-    public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
+    public class PessoaRepository : Repository<Pessoa>, IPessoaRepository
     {
-        public UsuarioRepository(DataContext context) 
-            : base(context, context.Usuarios) 
+        public PessoaRepository(DataContext context) 
+            : base(context, context.Pessoas) 
         {
         }
     }

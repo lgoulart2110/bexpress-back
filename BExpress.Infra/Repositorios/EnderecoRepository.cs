@@ -5,10 +5,10 @@ using BExpress.Infra.Repositorios.Interfaces;
 
 namespace BExpress.Infra.Repositorios
 {
-    public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
+    public class EnderecoRepository : Repository<Endereco>, IEnderecoRepository
     {
-        public UsuarioRepository(DataContext context) 
-            : base(context, context.Usuarios) 
+        public EnderecoRepository(DataContext context) 
+            : base(context, context.Enderecos) 
         {
         }
     }
