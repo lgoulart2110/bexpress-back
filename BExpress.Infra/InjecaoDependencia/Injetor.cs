@@ -1,5 +1,7 @@
 ﻿using BExpress.Infra.Repositorios;
 using BExpress.Infra.Repositorios.Interfaces;
+using BExpress.Infra.Servicos;
+using BExpress.Infra.Servicos.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BExpress.Infra.InjecaoDependencia
@@ -15,6 +17,8 @@ namespace BExpress.Infra.InjecaoDependencia
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
+            services.AddScoped<IProdutoService, ProdutoService>();
         }
     }
 }

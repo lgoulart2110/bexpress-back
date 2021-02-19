@@ -1,10 +1,11 @@
 ﻿using BExpress.Infra.Entidades;
 using BExpress.Infra.Specification;
+using System;
 using System.Collections.Generic;
 
 namespace BExpress.Infra.Base
 {
-    public interface IRepository<T> where T : EntidadePadrao
+    public interface IRepository<T> : IDisposable where T : EntidadePadrao
     {
         T Obter(int id);
         void Adicionar(T entity);

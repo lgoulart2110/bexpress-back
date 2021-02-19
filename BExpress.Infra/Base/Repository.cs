@@ -18,7 +18,7 @@ namespace BExpress.Infra.Base
             _context = context;
         }
 
-        public virtual void Adicionar(T entity)
+        public void Adicionar(T entity)
         {
             _set.Add(entity);
         }
@@ -28,12 +28,12 @@ namespace BExpress.Infra.Base
             _set.AddRange(entities);
         }
 
-        public virtual void Atualizar(T entity)
+        public void Atualizar(T entity)
         {
             _set.Update(entity);
         }
 
-        public virtual void Deletar(T entity)
+        public void Deletar(T entity)
         {
             _set.Remove(entity);
         }
@@ -43,7 +43,7 @@ namespace BExpress.Infra.Base
             _set.RemoveRange(entities);
         }
 
-        public virtual T Obter(int id)
+        public T Obter(int id)
         {
             return _set.Find(id);
         }
@@ -53,9 +53,14 @@ namespace BExpress.Infra.Base
             return _set.Where(spec.SatisfiedBy()).AsEnumerable();
         }
 
-        public virtual void SalvarAlteracoes()
+        public void SalvarAlteracoes()
         {
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

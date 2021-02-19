@@ -17,5 +17,11 @@ namespace BExpress.Infra.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ItemVenda>()
+                .HasNoKey();
+        }
     }
 }

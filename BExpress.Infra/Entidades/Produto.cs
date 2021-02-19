@@ -8,7 +8,7 @@ namespace BExpress.Infra.Entidades
         public string Descricao { get; set; }
         public int QuantidadeEstoque { get; set; }
         public DateTime DataCadastro { get; set; }
-        public string UrlImagem { get; set; }
+        public string Imagem { get; set; }
         public decimal PrecoCompra { get; set; }
         public decimal PrecoVenda { get; set; }
         public bool Ativo { get; set; }

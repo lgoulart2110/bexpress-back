@@ -1,13 +1,8 @@
 ﻿using BExpress.Infra.Entidades;
-using BExpress.Infra.Repositorios.Interfaces;
-using BExpress.Infra.Specification.Consultas;
+using BExpress.Infra.Servicos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BExpress.Api.Controllers
 {
@@ -15,11 +10,11 @@ namespace BExpress.Api.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly IProdutoRepository _produtoRepository;
+        private readonly IProdutoService _produtoService;
 
-        public ProdutoController(IProdutoRepository produtoRepository)
+        public ProdutoController(IProdutoService produtoService)
         {
-            _produtoRepository = produtoRepository;
+            _produtoService = produtoService;
         }
 
         [HttpGet]
@@ -28,8 +23,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
-                var produto = _produtoRepository.Obter(id);
-                if (produto is null) throw new Exception("Produto não encontrado.");
+                var produto = _produtoService.Obter(id);
                 return Ok(produto);
             }
             catch (Exception ex)
@@ -44,9 +38,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
-                var spec = ProdutoSpecification.Consulte(categoriaId);
-                var produtos = _produtoRepository.ObterPorConsulta(spec);
-                if (produtos is null || !produtos.Any()) throw new Exception("Nenhum produto encontrado.");
+                var produtos = _produtoService.ObterProdutos(categoriaId);
                 return Ok(produtos);
             }
             catch (Exception ex)
@@ -61,9 +53,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
-                if (produto is null) throw new Exception("Nenhum produto para adicionar.");
-                _produtoRepository.Adicionar(produto);
-                _produtoRepository.SalvarAlteracoes();
+                _produtoService.Adicionar(produto);
                 return Ok();
             }
             catch (Exception ex)
@@ -78,9 +68,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
-                if (produto is null) throw new Exception("Nenhum produto para alterar.");
-                _produtoRepository.Atualizar(produto);
-                _produtoRepository.SalvarAlteracoes();
+                _produtoService.Alterar(produto);
                 return Ok();
             }
             catch (Exception ex)
@@ -95,11 +83,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
-                var produto = _produtoRepository.Obter(id);
-                if (produto is null) throw new Exception("Produto não encontrado.");
-                produto.Inativar();
-                _produtoRepository.Atualizar(produto);
-                _produtoRepository.SalvarAlteracoes();
+                _produtoService.Deletar(id);
                 return Ok();
             }
             catch (Exception ex)

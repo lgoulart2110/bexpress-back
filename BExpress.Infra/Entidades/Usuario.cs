@@ -15,6 +15,6 @@ namespace BExpress.Infra.Entidades
         public Pessoa Pessoa { get; set; }
         public int CarrinhoComprasId { get; set; }
         public CarrinhoCompras CarrinhoCompras { get; set; }
-        public string UrlImagem { get; set; }
+        public string Imagem { get; set; }
     }
 }

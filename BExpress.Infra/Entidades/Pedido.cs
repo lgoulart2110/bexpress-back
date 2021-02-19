@@ -1,4 +1,5 @@
 ﻿using BExpress.Infra.Enums;
+using System;
 
 namespace BExpress.Infra.Entidades
 {
@@ -12,5 +13,6 @@ namespace BExpress.Infra.Entidades
         public Endereco Endereco { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        public DateTime DataPedido { get; set; }
     }
 }
