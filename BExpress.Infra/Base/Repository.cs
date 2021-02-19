@@ -4,6 +4,8 @@ using BExpress.Infra.Specification;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System;
 
 namespace BExpress.Infra.Base
 {
@@ -51,6 +53,11 @@ namespace BExpress.Infra.Base
         public IEnumerable<T> ObterPorConsulta(ISpecification<T> spec)
         {
             return _set.Where(spec.SatisfiedBy()).AsEnumerable();
+        }
+
+        public IEnumerable<T> ObterFiltrado(Expression<Func<T, bool>> expression)
+        {
+            return _set.Where(expression).AsEnumerable();
         }
 
         public void SalvarAlteracoes()

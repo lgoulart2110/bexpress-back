@@ -19,6 +19,7 @@ namespace BExpress.Infra.InjecaoDependencia
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
         }
     }
 }

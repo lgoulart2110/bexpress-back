@@ -1,5 +1,6 @@
 ﻿using BExpress.Infra.Enums;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BExpress.Infra.Entidades
 {
@@ -16,5 +17,13 @@ namespace BExpress.Infra.Entidades
         public int CarrinhoComprasId { get; set; }
         public CarrinhoCompras CarrinhoCompras { get; set; }
         public string Imagem { get; set; }
+
+        [NotMapped]
+        public string Token { get; set; }
+
+        public void Excluir()
+        {
+            Ativo = false;
+        }
     }
 }
