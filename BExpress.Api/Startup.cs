@@ -27,7 +27,9 @@ namespace BExpress.Api
         {
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<DataContext>(options => 
-                options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+                options
+                    .UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr))
+                    .UseLazyLoadingProxies());
             Injetor.Injetar(services);
             services.AddControllers();
 

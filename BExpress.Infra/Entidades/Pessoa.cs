@@ -8,6 +8,7 @@ namespace BExpress.Infra.Entidades
     {
         public string Nome { get; set; }
         public string CpfCnpj { get; set; }
+        public string Telefone { get; set; }
         public DateTime DataNascimento { get; set; }
         [NotMapped]
         public List<Endereco> Enderecos { get; set; }

@@ -13,10 +13,9 @@ namespace BExpress.Infra.Entidades
         public bool Ativo { get; set; }
         public DateTime DataRegistro { get; set; }
         public int PessoaId { get; set; }
-        public Pessoa Pessoa { get; set; }
+        public virtual Pessoa Pessoa { get; set; }
         public int CarrinhoComprasId { get; set; }
-        public CarrinhoCompras CarrinhoCompras { get; set; }
-        public string Imagem { get; set; }
+        public virtual CarrinhoCompras CarrinhoCompras { get; set; }
 
         [NotMapped]
         public string Token { get; set; }

@@ -34,7 +34,8 @@ namespace BExpress.Infra.Servicos
             {
                 CpfCnpj = usuarioDto.Cpf,
                 DataNascimento = usuarioDto.DataNascimento,
-                Nome = usuarioDto.Nome
+                Nome = usuarioDto.Nome,
+                Telefone = usuarioDto.Telefone
             };
 
             var usuario = new Usuario()
@@ -42,7 +43,6 @@ namespace BExpress.Infra.Servicos
                 Ativo = usuarioDto.Ativo,
                 CarrinhoCompras = new CarrinhoCompras(),
                 DataRegistro = usuarioDto.DataRegistro,
-                Imagem = "",
                 Login = usuarioDto.Login,
                 Pessoa = pessoa,
                 Roles = usuarioDto.Roles,
