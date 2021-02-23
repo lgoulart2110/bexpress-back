@@ -20,6 +20,7 @@ namespace BExpress.Infra.InjecaoDependencia
 
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BExpress.Infra.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BExpress.Infra.Entidades
@@ -19,6 +20,8 @@ namespace BExpress.Infra.Entidades
 
         [NotMapped]
         public string Token { get; set; }
+        [NotMapped]
+        public List<Categoria> Categorias { get; set; }
 
         public void Excluir()
         {

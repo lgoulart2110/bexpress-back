@@ -6,11 +6,6 @@ namespace BExpress.Infra.Entidades
 {
     public abstract class EntidadePadrao
     {
-        public EntidadePadrao()
-        {
-            Id = new int();
-        }
-
-        public int Id { get; private set; }
+        public int Id { get; set; }
     }
 }

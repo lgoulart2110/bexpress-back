@@ -2,9 +2,11 @@
 using BExpress.Infra.Entidades;
 using BExpress.Infra.Entidades.Dtos;
 using BExpress.Infra.Servicos.Interfaces;
+using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace BExpress.Api.Controllers
 {
@@ -13,10 +15,14 @@ namespace BExpress.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
+        private readonly ICategoriaService _categoriaService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(
+            IUsuarioService usuarioService,
+            ICategoriaService categoriaService)
         {
             _usuarioService = usuarioService;
+            _categoriaService = categoriaService;
         }
 
         [HttpPost]
@@ -26,8 +32,10 @@ namespace BExpress.Api.Controllers
             try
             {
                 var usuario = _usuarioService.Obter(loginDto.Login, loginDto.Senha);
+                var categorias = _categoriaService.ObterCategorias();
                 usuario.Token = TokenService.GenerateToken(usuario);
                 usuario.Senha = "";
+                usuario.Categorias = categorias.ToList();
                 return Ok(usuario);
             }
             catch (Exception ex)
@@ -51,7 +59,7 @@ namespace BExpress.Api.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [Route("{id}")]
         public IActionResult DeletarUsuario(int id)
         {

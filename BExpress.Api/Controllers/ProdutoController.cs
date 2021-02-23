@@ -1,5 +1,6 @@
 ﻿using BExpress.Infra.Entidades;
 using BExpress.Infra.Servicos.Interfaces;
+using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -47,7 +48,7 @@ namespace BExpress.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "administrator")]
+        [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpPost]
         public IActionResult AdicionarProduto([FromBody]Produto produto)
         {
@@ -62,7 +63,7 @@ namespace BExpress.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "administrator")]
+        [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpPut]
         public IActionResult AlterarProduto([FromBody]Produto produto)
         {
@@ -77,7 +78,7 @@ namespace BExpress.Api.Controllers
             }
         }
 
-        [Authorize(Roles = "administrator")]
+        [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpDelete]
         public IActionResult DeletarProduto([FromQuery]int id)
         {

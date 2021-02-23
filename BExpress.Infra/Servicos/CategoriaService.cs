@@ -1,0 +1,73 @@
+﻿using BExpress.Infra.Entidades;
+using BExpress.Infra.Repositorios.Interfaces;
+using BExpress.Infra.Servicos.Interfaces;
+using BExpress.Infra.Specification.Consultas;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BExpress.Infra.Servicos
+{
+    public class CategoriaService : ICategoriaService
+    {
+        private readonly ICategoriaRepository _categoriaRepository;
+
+        public CategoriaService(ICategoriaRepository categoriaRepository)
+        {
+            _categoriaRepository = categoriaRepository;
+        }
+
+        public void Dispose()
+        {
+            _categoriaRepository.Dispose();
+        }
+
+        public void Adicionar(Categoria categoria)
+        {
+            if (categoria is null) throw new Exception("Nenhuma categoria para adicionar.");
+
+            ValidarCategoria(categoria);
+            categoria.Ativa = true;
+            categoria.DataCadastro = DateTime.Now;
+            _categoriaRepository.Adicionar(categoria);
+            _categoriaRepository.SalvarAlteracoes();
+        }
+
+        public void Alterar(Categoria categoria)
+        {
+            if (categoria is null) throw new Exception("Nenhuma categoria para alterar.");
+
+            ValidarCategoria(categoria);
+
+            _categoriaRepository.Atualizar(categoria);
+            _categoriaRepository.SalvarAlteracoes();
+        }
+
+        public void Deletar(int id)
+        {
+            var categoria = Obter(id);
+            categoria.Inativar();
+            _categoriaRepository.Atualizar(categoria);
+            _categoriaRepository.SalvarAlteracoes();
+        }
+
+        public Categoria Obter(int id)
+        {
+            var categoria = _categoriaRepository.Obter(id);
+            if (categoria is null) throw new Exception("Categoria não encontrada.");
+            return categoria;
+        }
+
+        public IEnumerable<Categoria> ObterCategorias()
+        {
+            var categorias = _categoriaRepository.ObterFiltrado(c => c.Ativa);
+            return categorias;
+        }
+
+        private void ValidarCategoria(Categoria categoria)
+        {
+            var existeCriada = _categoriaRepository.ObterFiltrado(c => c.Ativa && c.Nome == categoria.Nome).Any();
+            if (existeCriada) throw new Exception("Já existe uma categoria com esse nome.");
+        }
+    }
+}
