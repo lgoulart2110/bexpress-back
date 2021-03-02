@@ -11,15 +11,24 @@ namespace BExpress.Infra.Servicos
     public class CategoriaService : ICategoriaService
     {
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoService _produtoService;
+        private readonly IProdutoRepository _produtoRepository;
 
-        public CategoriaService(ICategoriaRepository categoriaRepository)
+        public CategoriaService(
+            ICategoriaRepository categoriaRepository,
+            IProdutoService produtoService,
+            IProdutoRepository produtoRepository)
         {
             _categoriaRepository = categoriaRepository;
+            _produtoService = produtoService;
+            _produtoRepository = produtoRepository;
         }
 
         public void Dispose()
         {
             _categoriaRepository.Dispose();
+            _produtoRepository.Dispose();
+            _produtoService.Dispose();
         }
 
         public void Adicionar(Categoria categoria)
@@ -46,6 +55,12 @@ namespace BExpress.Infra.Servicos
         public void Deletar(int id)
         {
             var categoria = Obter(id);
+            var produtos = _produtoService.ObterProdutos(id);
+            foreach (var produto in produtos)
+            {
+                produto.Inativar();
+                _produtoRepository.Atualizar(produto);
+            }
             categoria.Inativar();
             _categoriaRepository.Atualizar(categoria);
             _categoriaRepository.SalvarAlteracoes();

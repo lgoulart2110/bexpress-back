@@ -21,4 +21,8 @@
     <ProjectReference Include="..\BExpress.Infra\BExpress.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Imagens\" />
+  </ItemGroup>
+
 </Project>

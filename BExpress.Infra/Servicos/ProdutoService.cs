@@ -25,7 +25,6 @@ namespace BExpress.Infra.Servicos
         public void Adicionar(Produto produto)
         {
             if (produto is null) throw new Exception("Nenhum produto para adicionar.");
-            produto.DataCadastro = DateTime.Now;
             _produtoRepository.Adicionar(produto);
             _produtoRepository.SalvarAlteracoes();
         }

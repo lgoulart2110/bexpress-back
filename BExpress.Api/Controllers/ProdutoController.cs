@@ -1,9 +1,16 @@
 ﻿using BExpress.Infra.Entidades;
+using BExpress.Infra.Entidades.Dtos;
+using BExpress.Infra.Paginacao;
 using BExpress.Infra.Servicos.Interfaces;
 using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace BExpress.Api.Controllers
 {
@@ -19,6 +26,7 @@ namespace BExpress.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         public IActionResult ObterProduto(int id)
         {
@@ -34,13 +42,22 @@ namespace BExpress.Api.Controllers
         }
 
         [HttpGet]
-        [Route("produtos/{categoriaId}")]
-        public IActionResult ObterProdutos(int? categoriaId)
+        [Authorize]
+        [Route("produtos")]
+        public IActionResult ObterProdutos(int pagina, int quantidadePagina, int? categoriaId = null)
         {
             try
             {
                 var produtos = _produtoService.ObterProdutos(categoriaId);
-                return Ok(produtos);
+                var paginacao = Paginar<Produto>.Pagine(produtos, pagina, quantidadePagina);
+                return Ok(
+                    new RetornoPaginacaoDto(
+                        paginacao.TotalPaginas,
+                        paginacao.QuantidadeTotal,
+                        paginacao.Pagina,
+                        paginacao.Dados
+                    )
+                );
             }
             catch (Exception ex)
             {
@@ -50,10 +67,21 @@ namespace BExpress.Api.Controllers
 
         [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpPost]
-        public IActionResult AdicionarProduto([FromBody]Produto produto)
+        public async Task<IActionResult> AdicionarProduto(string nome, int categoriaId, string descricao, string preco, IFormFile imagem)
         {
             try
             {
+                var nomeImagem = await SalvarImagemAsync(imagem);
+                var produto = new Produto
+                {
+                    Ativo = true,
+                    CategoriaId = categoriaId,
+                    DataCadastro = DateTime.Now,
+                    Descricao = descricao,
+                    Nome = nome,
+                    Imagem = nomeImagem,
+                    Preco = Formatadores.FormataRealParaDecimal(preco)
+                };
                 _produtoService.Adicionar(produto);
                 return Ok();
             }
@@ -91,6 +119,33 @@ namespace BExpress.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        private async Task<string> SalvarImagemAsync(IFormFile imagem)
+        {
+            if (imagem is null) return "padrao.png";
+            var path = $"{Directory.GetCurrentDirectory()}/Imagens";
+            var extencao = Path.GetExtension(imagem.FileName);
+
+            var extencoesPermitidas = new List<string>
+            {
+                ".jpg",
+                ".jpeg",
+                ".png"
+            };
+
+            if (!extencoesPermitidas.Contains(extencao))
+                throw new Exception("Imagem não permitida.");
+
+            var novoNome = $"{Guid.NewGuid()}{extencao}";
+            var fullPath = $"{path}/{novoNome}";
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await imagem.CopyToAsync(stream);
+            }
+
+            return novoNome;
         }
     }
 }

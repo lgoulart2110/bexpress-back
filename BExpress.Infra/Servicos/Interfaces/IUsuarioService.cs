@@ -1,6 +1,7 @@
 ﻿using BExpress.Infra.Entidades;
 using BExpress.Infra.Entidades.Dtos;
 using System;
+using System.Collections.Generic;
 
 namespace BExpress.Infra.Servicos.Interfaces
 {
@@ -10,5 +11,6 @@ namespace BExpress.Infra.Servicos.Interfaces
         void Adicionar(UsuarioDto usuarioDto);
         void Deletar(int id);
         void AlterarSenha(int idUsuario, string senhaAtual, string novaSenha);
+        IEnumerable<Usuario> ObterUsuarios();
     }
 }

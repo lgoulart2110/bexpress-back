@@ -1,4 +1,6 @@
 ﻿using BExpress.Infra.Entidades;
+using BExpress.Infra.Entidades.Dtos;
+using BExpress.Infra.Paginacao;
 using BExpress.Infra.Servicos.Interfaces;
 using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
@@ -66,13 +68,35 @@ namespace BExpress.Api.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("categorias")]
         public IActionResult ObterCategorias()
         {
             try
             {
                 var categorias = _categoriaService.ObterCategorias();
                 return Ok(categorias);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("categorias/paginada")]
+        public IActionResult ObterCategoriasPaginada(int pagina, int quantidadePagina)
+        {
+            try
+            {
+                var categorias = _categoriaService.ObterCategorias();
+                var paginacao = Paginar<Categoria>.Pagine(categorias, pagina, quantidadePagina);
+                return Ok(
+                    new RetornoPaginacaoDto(
+                        paginacao.TotalPaginas,
+                        paginacao.QuantidadeTotal,
+                        paginacao.Pagina,
+                        paginacao.Dados
+                    )
+                );
             }
             catch (Exception ex)
             {

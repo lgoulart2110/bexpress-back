@@ -20,8 +20,6 @@ namespace BExpress.Infra.Entidades
 
         [NotMapped]
         public string Token { get; set; }
-        [NotMapped]
-        public List<Categoria> Categorias { get; set; }
 
         public void Excluir()
         {

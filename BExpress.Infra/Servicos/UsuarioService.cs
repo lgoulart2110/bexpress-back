@@ -81,5 +81,11 @@ namespace BExpress.Infra.Servicos
             _usuarioRepository.Atualizar(usuario);
             _usuarioRepository.SalvarAlteracoes();
         }
+
+        public IEnumerable<Usuario> ObterUsuarios()
+        {
+            var usuarios = _usuarioRepository.ObterFiltrado(c => c.Ativo && c.TipoUsuario == Enums.eTipoUsuario.Cliente);
+            return usuarios;
+        }
     }
 }
