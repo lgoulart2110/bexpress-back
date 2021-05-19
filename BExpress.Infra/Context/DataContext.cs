@@ -21,7 +21,7 @@ namespace BExpress.Infra.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ItemVenda>()
-                .HasNoKey();
+                .HasKey(x => new { x.CarrinhoComprasId, x.ProdutoId });
         }
     }
 }

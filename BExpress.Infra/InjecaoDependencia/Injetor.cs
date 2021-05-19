@@ -2,6 +2,7 @@
 using BExpress.Infra.Repositorios.Interfaces;
 using BExpress.Infra.Servicos;
 using BExpress.Infra.Servicos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BExpress.Infra.InjecaoDependencia
@@ -21,6 +22,7 @@ namespace BExpress.Infra.InjecaoDependencia
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<ICarrinhoComprasService, CarrinhoComprasService>();
         }
     }
 }

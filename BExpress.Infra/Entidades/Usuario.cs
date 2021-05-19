@@ -12,7 +12,7 @@ namespace BExpress.Infra.Entidades
         public string Roles { get; set; }
         public eTipoUsuario TipoUsuario { get; set; }
         public bool Ativo { get; set; }
-        public DateTime DataRegistro { get; set; }
+        public DateTime DataCadastro { get; set; }
         public int PessoaId { get; set; }
         public virtual Pessoa Pessoa { get; set; }
         public int CarrinhoComprasId { get; set; }

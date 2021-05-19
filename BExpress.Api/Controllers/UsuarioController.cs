@@ -3,6 +3,7 @@ using BExpress.Infra.Entidades;
 using BExpress.Infra.Entidades.Dtos;
 using BExpress.Infra.Paginacao;
 using BExpress.Infra.Servicos.Interfaces;
+using BExpress.Infra.Sessao;
 using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,7 @@ using System.Linq;
 namespace BExpress.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : PadraoController
     {
         private readonly IUsuarioService _usuarioService;
 
@@ -33,6 +33,7 @@ namespace BExpress.Api.Controllers
                 var usuario = _usuarioService.Obter(loginDto.Login, loginDto.Senha);
                 usuario.Token = TokenService.GenerateToken(usuario);
                 usuario.Senha = "";
+                Sessao.DefinirUsuarioSessao(usuario);
                 return Ok(usuario);
             }
             catch (Exception ex)

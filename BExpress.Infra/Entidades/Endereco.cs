@@ -2,7 +2,7 @@
 {
     public class Endereco : EntidadePadrao
     {
-        public string Descricao { get; set; }
+        public string Nome { get; set; }
         public string Cep { get; set; }
         public string Logradouro { get; set; }
         public string Estado { get; set; }

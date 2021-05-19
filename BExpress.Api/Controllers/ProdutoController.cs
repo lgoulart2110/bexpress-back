@@ -15,8 +15,7 @@ using System.Threading.Tasks;
 namespace BExpress.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class ProdutoController : ControllerBase
+    public class ProdutoController : PadraoController
     {
         private readonly IProdutoService _produtoService;
 

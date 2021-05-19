@@ -42,7 +42,7 @@ namespace BExpress.Infra.Servicos
             {
                 Ativo = usuarioDto.Ativo,
                 CarrinhoCompras = new CarrinhoCompras(),
-                DataRegistro = usuarioDto.DataRegistro,
+                DataCadastro = usuarioDto.DataRegistro,
                 Login = usuarioDto.Login,
                 Pessoa = pessoa,
                 Roles = usuarioDto.Roles,

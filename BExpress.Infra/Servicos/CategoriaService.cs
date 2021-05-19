@@ -36,7 +36,7 @@ namespace BExpress.Infra.Servicos
             if (categoria is null) throw new Exception("Nenhuma categoria para adicionar.");
 
             ValidarCategoria(categoria);
-            categoria.Ativa = true;
+            categoria.Ativo = true;
             categoria.DataCadastro = DateTime.Now;
             _categoriaRepository.Adicionar(categoria);
             _categoriaRepository.SalvarAlteracoes();
@@ -75,13 +75,13 @@ namespace BExpress.Infra.Servicos
 
         public IEnumerable<Categoria> ObterCategorias()
         {
-            var categorias = _categoriaRepository.ObterFiltrado(c => c.Ativa);
+            var categorias = _categoriaRepository.ObterFiltrado(c => c.Ativo);
             return categorias;
         }
 
         private void ValidarCategoria(Categoria categoria)
         {
-            var existeCriada = _categoriaRepository.ObterFiltrado(c => c.Ativa && c.Nome == categoria.Nome).Any();
+            var existeCriada = _categoriaRepository.ObterFiltrado(c => c.Ativo && c.Nome == categoria.Nome).Any();
             if (existeCriada) throw new Exception("Já existe uma categoria com esse nome.");
         }
     }

@@ -4,8 +4,7 @@ using System.IO;
 namespace BExpress.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class ImagemController : ControllerBase
+    public class ImagemController : PadraoController
     {
         public readonly string path;
 

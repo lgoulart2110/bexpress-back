@@ -10,8 +10,7 @@ using System;
 namespace BExpress.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class CategoriaController : ControllerBase
+    public class CategoriaController : PadraoController
     {
         private readonly ICategoriaService _categoriaService;
 

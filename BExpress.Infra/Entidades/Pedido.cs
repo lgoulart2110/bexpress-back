@@ -11,8 +11,6 @@ namespace BExpress.Infra.Entidades
         public eSituacaoPedido SituacaoPedido { get; set; }
         public int EnderecoId { get; set; }
         public virtual Endereco Endereco { get; set; }
-        public int UsuarioId { get; set; }
-        public virtual Usuario Usuario { get; set; }
         public DateTime DataPedido { get; set; }
     }
 }
