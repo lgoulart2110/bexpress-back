@@ -2,9 +2,10 @@
 {
     public enum eSituacaoPedido
     {
-        Realizado,
+        Pendente,
+        Aceito,
         AguardandoEntrega,
         Cancelado,
-        Finalizado
+        Entregue
     }
 }

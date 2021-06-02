@@ -9,7 +9,7 @@ using System;
 
 namespace BExpress.Infra.Base
 {
-    public class Repository<T> : IRepository<T> where T : EntidadePadrao
+    public class Repository<T> : IRepository<T> where T : class
     {
         DbSet<T> _set;
         DataContext _context;

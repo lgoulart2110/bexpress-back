@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace BExpress.Infra.Base
 {
-    public interface IRepository<T> : IDisposable where T : EntidadePadrao
+    public interface IRepository<T> : IDisposable where T : class
     {
         T Obter(int id);
         void Adicionar(T entity);

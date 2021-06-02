@@ -1,0 +1,89 @@
+﻿create database bexpress;
+
+use bexpress;
+
+create table Categorias(
+	Id int not null primary key auto_increment,
+    Nome varchar(250) not null,
+    Ativo bit,
+    DataCadastro datetime
+);
+
+create table Produtos(
+	Id int not null primary key auto_increment,
+    Nome varchar(250) not null,
+    Descricao varchar(500),
+    Imagem varchar(500),
+    Ativo bit,
+    DataCadastro datetime,
+    Preco decimal(11, 2),
+    CategoriaId int not null,
+    QuantidadeEstoque int not null,
+    foreign key (CategoriaId) references Categorias(Id)
+);
+
+create table CarrinhoCompras(
+	Id int not null primary key auto_increment,
+    PrecoFrete decimal(11, 2),
+    PrecoFinal decimal(11, 2)
+);
+
+create table Pessoas(
+	Id int not null primary key auto_increment,
+    Nome varchar(250) not null,
+    CpfCnpj varchar(250) not null,
+    Telefone varchar(250) not null,
+    DataNascimento datetime not null,
+    DataCadastro datetime not null
+);
+
+create table Enderecos(
+	Id int not null primary key auto_increment,
+    Nome varchar(250) not null,
+    Cep varchar(10),
+    Logradouro varchar(300),
+    Estado varchar(100),
+    Cidade varchar(100),
+    Bairro varchar(100),
+    Complemento varchar(300),
+    Numero varchar(10),
+    PessoaId int not null,
+    DataCadastro datetime not null,
+    foreign key (PessoaId) references Pessoas(Id)
+);
+
+create table Usuarios(
+	Id int not null primary key auto_increment,
+    Login varchar(250) not null,
+    Senha varchar(50) not null,
+    Roles varchar(50) not null,
+    PessoaId int not null,
+    CarrinhoComprasId int not null,
+    TipoUsuario int not null,
+    Ativo bit,
+    DataCadastro datetime,
+    foreign key (PessoaId) references Pessoas(Id),
+    foreign key (CarrinhoComprasId) references CarrinhoCompras(Id)
+);
+
+create table ItemVendas(
+    ProdutoId int not null,
+    CarrinhoComprasId int not null,
+    Quantidade int not null,
+    foreign key (ProdutoId) references Produtos(Id),
+    foreign key (CarrinhoComprasId) references CarrinhoCompras(Id)
+);
+
+create table Pedidos(
+	Id int not null primary key auto_increment,
+    Valor decimal(11, 2) not null,
+    Troco varchar(250),
+    Descricao varchar(250),
+    TipoPagamento int not null,
+    SituacaoPedido int not null,
+    EnderecoId int not null,
+    UsuarioId int not null,
+    DataPedido datetime not null,
+    foreign key (EnderecoId) references Enderecos(Id),
+    foreign key (UsuarioId) references Usuarios(Id)
+);

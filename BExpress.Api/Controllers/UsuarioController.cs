@@ -25,6 +25,15 @@ namespace BExpress.Api.Controllers
         }
 
         [HttpPost]
+        [Route("jwt")]
+        [Authorize]
+        public IActionResult VerificarToken(Usuario usuario)
+        {
+            Sessao.DefinirUsuarioSessao(usuario);
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("login")]
         public IActionResult Login([FromBody]LoginDto loginDto)
         {

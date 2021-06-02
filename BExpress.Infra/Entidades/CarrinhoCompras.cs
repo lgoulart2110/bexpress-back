@@ -10,14 +10,30 @@ namespace BExpress.Infra.Entidades
         public decimal PrecoFrete { get; set; }
         public decimal PrecoFinal { get; set; }
 
-        public void AdicionarProduto(List<ItemVenda> itens)
+        public int QuantidadeItems => ItemVendas.Count;
+
+        public void AdicionarProduto(ItemVenda item)
         {
-            ItemVendas.AddRange(itens);
+            ItemVendas.Add(item);
         }
 
         public void AtualizarValores()
         {
-            PrecoFinal = ItemVendas.Sum(c => c.Produto.Preco) + PrecoFrete;
+            PrecoFinal = ItemVendas.Sum(c => c.Produto.Preco * c.Quantidade) + PrecoFrete;
+        }
+
+        public string ObterDescricaoPedido()
+        {
+            if (!ItemVendas.Any()) return null;
+
+            var descricao = string.Empty;
+
+            foreach (var item in ItemVendas)
+            {
+                descricao += $"{item.Quantidade} {item.Produto?.Nome} \n";
+            }
+
+            return descricao;
         }
     }
 }

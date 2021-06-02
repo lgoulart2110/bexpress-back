@@ -1,4 +1,6 @@
-﻿namespace BExpress.Infra.Entidades
+﻿using System;
+
+namespace BExpress.Infra.Entidades
 {
     public class Endereco : EntidadePadrao
     {
@@ -11,6 +13,6 @@
         public string Complemento { get; set; }
         public string Numero { get; set; }
         public int PessoaId { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
+        public DateTime DataCadastro { get; set; }
     }
 }

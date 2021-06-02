@@ -6,15 +6,16 @@ namespace BExpress.Infra.Entidades
     {
         public ItemVenda() { }
 
-        public ItemVenda(Produto produto, CarrinhoCompras carrinhoCompras)
+        public ItemVenda(Produto produto, CarrinhoCompras carrinhoCompras, int quantidade)
         {
-            ProdutoId = produto.Id;
+            Produto = produto;
             CarrinhoComprasId = carrinhoCompras.Id;
+            Quantidade = quantidade;
         }
 
         public int ProdutoId { get; set; }
         public virtual Produto Produto { get; set; }
         public int CarrinhoComprasId { get; set; }
-        public virtual CarrinhoCompras CarrinhoCompras { get; set; }
+        public int Quantidade { get; set; }
     }
 }

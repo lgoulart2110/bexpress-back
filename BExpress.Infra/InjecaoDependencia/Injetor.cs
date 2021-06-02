@@ -18,11 +18,14 @@ namespace BExpress.Infra.InjecaoDependencia
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IItemVendaRepository, ItemVendaRepository>();
 
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<ICarrinhoComprasService, CarrinhoComprasService>();
+            services.AddScoped<IEnderecoService, EnderecoService>();
+            services.AddScoped<IPedidoService, PedidoService>();
         }
     }
 }

@@ -66,7 +66,7 @@ namespace BExpress.Api.Controllers
 
         [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpPost]
-        public async Task<IActionResult> AdicionarProduto(string nome, int categoriaId, string descricao, string preco, IFormFile imagem)
+        public async Task<IActionResult> AdicionarProduto(string nome, int categoriaId, string descricao, string preco, int quantidadeEstoque, IFormFile imagem)
         {
             try
             {
@@ -79,7 +79,8 @@ namespace BExpress.Api.Controllers
                     Descricao = descricao,
                     Nome = nome,
                     Imagem = nomeImagem,
-                    Preco = Formatadores.FormataRealParaDecimal(preco)
+                    Preco = Formatadores.FormataRealParaDecimal(preco),
+                    QuantidadeEstoque = quantidadeEstoque
                 };
                 _produtoService.Adicionar(produto);
                 return Ok();
@@ -92,7 +93,7 @@ namespace BExpress.Api.Controllers
 
         [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpPut]
-        public IActionResult AlterarProduto([FromBody]Produto produto)
+        public IActionResult AlterarProduto([FromBody]ProdutoDto produto)
         {
             try
             {

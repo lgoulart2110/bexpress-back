@@ -29,5 +29,10 @@ namespace BExpress.Infra.Entidades
         {
             QuantidadeEstoque -= valor;
         }
+
+        public void RetornarEstoque(int valor)
+        {
+            QuantidadeEstoque += valor;
+        }
     }
 }

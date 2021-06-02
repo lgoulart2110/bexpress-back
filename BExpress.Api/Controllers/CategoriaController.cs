@@ -2,6 +2,7 @@
 using BExpress.Infra.Entidades.Dtos;
 using BExpress.Infra.Paginacao;
 using BExpress.Infra.Servicos.Interfaces;
+using BExpress.Infra.Sessao;
 using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

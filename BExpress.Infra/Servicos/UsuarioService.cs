@@ -35,7 +35,8 @@ namespace BExpress.Infra.Servicos
                 CpfCnpj = usuarioDto.Cpf,
                 DataNascimento = usuarioDto.DataNascimento,
                 Nome = usuarioDto.Nome,
-                Telefone = usuarioDto.Telefone
+                Telefone = usuarioDto.Telefone,
+                DataCadastro = usuarioDto.DataRegistro
             };
 
             var usuario = new Usuario()

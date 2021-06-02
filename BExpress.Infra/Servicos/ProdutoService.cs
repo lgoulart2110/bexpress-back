@@ -1,4 +1,5 @@
 ﻿using BExpress.Infra.Entidades;
+using BExpress.Infra.Entidades.Dtos;
 using BExpress.Infra.Repositorios.Interfaces;
 using BExpress.Infra.Servicos.Interfaces;
 using BExpress.Infra.Specification.Consultas;
@@ -29,9 +30,15 @@ namespace BExpress.Infra.Servicos
             _produtoRepository.SalvarAlteracoes();
         }
 
-        public void Alterar(Produto produto)
+        public void Alterar(ProdutoDto produtoDto)
         {
-            if (produto is null) throw new Exception("Nenhum produto para alterar.");
+            if (produtoDto is null) throw new Exception("Nenhum produto para alterar.");
+            var produto = _produtoRepository.Obter(produtoDto.Id);
+            produto.Nome = produtoDto.Nome;
+            produto.Descricao = produtoDto.Descricao;
+            produto.Preco = Utilidades.Formatadores.FormataRealParaDecimal(produtoDto.Preco);
+            produto.CategoriaId = produtoDto.CategoriaId;
+            produto.QuantidadeEstoque = produtoDto.QuantidadeEstoque;
             _produtoRepository.Atualizar(produto);
             _produtoRepository.SalvarAlteracoes();
         }
