@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BExpress.Infra.Entidades
 {
@@ -14,5 +15,14 @@ namespace BExpress.Infra.Entidades
         public string Numero { get; set; }
         public int PessoaId { get; set; }
         public DateTime DataCadastro { get; set; }
+
+        [NotMapped]
+        public string DescricaoCompleta
+        {
+            get
+            {
+                return $"{Logradouro} - {Numero} - {Bairro} - {Cidade} - {Estado} - Cep: {Cep}";
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace BExpress.Infra.Servicos.Interfaces
         Usuario Obter(string login, string senha);
         void Adicionar(UsuarioDto usuarioDto);
         void Deletar(int id);
-        void AlterarSenha(int idUsuario, string senhaAtual, string novaSenha);
+        void AlterarSenha(string senhaAtual, string novaSenha, string novaSenhaRepetir);
         IEnumerable<Usuario> ObterUsuarios();
     }
 }

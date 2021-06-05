@@ -8,8 +8,8 @@ namespace BExpress.Infra.Specification.Consultas
         {
             Specification<Produto> spec = new DirectSpecification<Produto>(c => c.Ativo);
 
-            if (categoriaId.HasValue)
-                spec = new DirectSpecification<Produto>(c => c.CategoriaId == categoriaId.Value);
+            if (categoriaId.HasValue && categoriaId > 0)
+                spec &= new DirectSpecification<Produto>(c => c.CategoriaId == categoriaId.Value);
 
             return spec;
         }

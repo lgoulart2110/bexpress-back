@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -70,6 +73,7 @@ namespace BExpress.Api.Controllers
         {
             try
             {
+                if (descricao == "undefined") descricao = null;
                 var nomeImagem = await SalvarImagemAsync(imagem);
                 var produto = new Produto
                 {
@@ -108,7 +112,8 @@ namespace BExpress.Api.Controllers
 
         [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [HttpDelete]
-        public IActionResult DeletarProduto([FromQuery]int id)
+        [Route("{id}")]
+        public IActionResult DeletarProduto(int id)
         {
             try
             {
@@ -124,7 +129,7 @@ namespace BExpress.Api.Controllers
         private async Task<string> SalvarImagemAsync(IFormFile imagem)
         {
             if (imagem is null) return "padrao.png";
-            var path = $"{Directory.GetCurrentDirectory()}/Imagens";
+            var path = $"{Directory.GetCurrentDirectory()}\\Imagens";
             var extencao = Path.GetExtension(imagem.FileName);
 
             var extencoesPermitidas = new List<string>
@@ -138,7 +143,7 @@ namespace BExpress.Api.Controllers
                 throw new Exception("Imagem não permitida.");
 
             var novoNome = $"{Guid.NewGuid()}{extencao}";
-            var fullPath = $"{path}/{novoNome}";
+            var fullPath = $"{path}\\{novoNome}";
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {

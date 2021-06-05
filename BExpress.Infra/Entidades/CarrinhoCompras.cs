@@ -30,7 +30,7 @@ namespace BExpress.Infra.Entidades
 
             foreach (var item in ItemVendas)
             {
-                descricao += $"{item.Quantidade} {item.Produto?.Nome} \n";
+                descricao += $"<br> # {item.Quantidade} x {item.Produto?.Nome}";
             }
 
             return descricao;

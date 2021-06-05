@@ -2,7 +2,7 @@
 using BExpress.Infra.Entidades.Dtos;
 using BExpress.Infra.Repositorios.Interfaces;
 using BExpress.Infra.Servicos.Interfaces;
-using BExpress.Infra.Specification.Consultas;
+using BExpress.Infra.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +39,17 @@ namespace BExpress.Infra.Servicos
                 DataCadastro = usuarioDto.DataRegistro
             };
 
+            if (!_usuarioRepository.ObterFiltrado(c => true).Any())
+            {
+                usuarioDto.Roles = Constantes.ADMINISTRADOR;
+                usuarioDto.TipoUsuario = Enums.eTipoUsuario.Administrador;
+            }
+            else
+            {
+                usuarioDto.Roles = "cliente";
+                usuarioDto.TipoUsuario = Enums.eTipoUsuario.Cliente;
+            }
+
             var usuario = new Usuario()
             {
                 Ativo = usuarioDto.Ativo,
@@ -72,12 +83,16 @@ namespace BExpress.Infra.Servicos
             return usuario;
         }
 
-        public void AlterarSenha(int idUsuario, string senhaAtual, string novaSenha)
+        public void AlterarSenha(string senhaAtual, string novaSenha, string novaSenhaRepetir)
         {
-            if (string.IsNullOrEmpty(senhaAtual) || string.IsNullOrEmpty(novaSenha)) throw new Exception("Digite a senha atual e a nova senha.");
-            if (senhaAtual == novaSenha) throw new Exception("Senha atual não pode ser igual a nova senha.");
-            var usuario = _usuarioRepository.Obter(idUsuario);
+            var usuario = _usuarioRepository.Obter(Sessao.Sessao.Usuario.Id);
             if (usuario is null) throw new Exception("Usuário não encontrado.");
+
+            if (string.IsNullOrEmpty(senhaAtual) || string.IsNullOrEmpty(novaSenha)) throw new Exception("Digite a senha atual e a nova senha.");
+            if (usuario.Senha != senhaAtual) throw new Exception("Senha atual inválida");
+            if (senhaAtual == novaSenha) throw new Exception("Senha atual não pode ser igual a nova senha.");
+            if (novaSenha != novaSenhaRepetir) throw new Exception("As novas senhas devem ser iguais.");
+            
             usuario.Senha = novaSenha;
             _usuarioRepository.Atualizar(usuario);
             _usuarioRepository.SalvarAlteracoes();

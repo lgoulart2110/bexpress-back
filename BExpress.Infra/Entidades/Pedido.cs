@@ -1,5 +1,7 @@
 ﻿using BExpress.Infra.Enums;
+using BExpress.Infra.Utilidades;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BExpress.Infra.Entidades
 {
@@ -15,5 +17,22 @@ namespace BExpress.Infra.Entidades
         public virtual Usuario Usuario { get; set; }
         public DateTime DataPedido { get; set; }
         public string Descricao { get; set; }
+
+        [NotMapped]
+        public string DescricaoCompleta 
+        { get
+            {
+                var valorFormatado = $"R$ {Valor}".Replace(".", ",");
+                var endereco = Endereco?.DescricaoCompleta;
+                var tipoPagamento = TipoPagamento.GetDescription();
+                var descPag = TipoPagamento == eTipoPagamento.Cartao ? tipoPagamento : $"{tipoPagamento} {Troco}";
+                var data = DataPedido.ToShortDateString();
+                return $"{Descricao} <br> " +
+                    $"Total: {valorFormatado} <br> " +
+                    $"Endereço de entrega: {endereco} <br> " +
+                    $"Pagamento: {descPag} <br> " +
+                    $"Data do pedido: {data}";
+            } 
+        }
     }
 }

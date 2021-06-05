@@ -81,21 +81,6 @@ namespace BExpress.Api.Controllers
             }
         }
 
-        [HttpPut]
-        [Authorize]
-        public IActionResult AlterarSenha([FromBody]AlterarSenhaDto alterarSenhaDto)
-        {
-            try
-            {
-                _usuarioService.AlterarSenha(alterarSenhaDto.Id, alterarSenhaDto.SenhaAtual, alterarSenhaDto.NovaSenha);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpGet]
         [Authorize(Roles = Constantes.ADMINISTRADOR)]
         [Route("usuarios/paginado")]
@@ -113,6 +98,21 @@ namespace BExpress.Api.Controllers
                         paginacao.Dados
                     )
                 );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Authorize]
+        public IActionResult AlterarSenha(AlterarSenhaDto alterarSenhaDto)
+        {
+            try
+            {
+                _usuarioService.AlterarSenha(alterarSenhaDto.SenhaAtual, alterarSenhaDto.NovaSenha, alterarSenhaDto.NovaSenhaRepetir);
+                return Ok();
             }
             catch (Exception ex)
             {
