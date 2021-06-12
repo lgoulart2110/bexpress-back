@@ -25,4 +25,10 @@
     <Folder Include="Imagens\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Imagens\padrao.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
