@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 
 namespace BExpress.Api.Controllers
@@ -6,20 +9,31 @@ namespace BExpress.Api.Controllers
     [Route("api/[controller]")]
     public class ImagemController : PadraoController
     {
-        public readonly string path;
+        private readonly CloudStorageAccount _storageAccount;
 
-        public ImagemController()
+        public ImagemController(IConfiguration configuration)
         {
-            path = $"{Directory.GetCurrentDirectory()}/Imagens";
+            _storageAccount = CloudStorageAccount.Parse(configuration.GetConnectionString("AzureStorage"));
         }
 
         [HttpGet]
         [Route("{imagemName}")]
-        public IActionResult ObterImagem(string imagemName)
+        public string ObterImagem(string imagemName)
         {
-            var imagePath = Path.Combine(path, imagemName);
-            var imagem = System.IO.File.OpenRead(imagePath);
-            return File(imagem, "image/jpeg");
+            CloudBlobClient blobClient = _storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("images");
+
+            //Caso não exista, ele cria
+            container.CreateIfNotExistsAsync();
+
+            //Setar permissão de acesso para 'público'
+            container.SetPermissionsAsync(
+                new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }
+            );
+
+            //Recupera os arquivos de um container
+            var arquivo = container.GetBlockBlobReference(imagemName).Uri.AbsoluteUri;
+            return arquivo;
         }
     }
 }

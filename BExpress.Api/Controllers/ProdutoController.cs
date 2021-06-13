@@ -6,6 +6,9 @@ using BExpress.Infra.Utilidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,10 +24,12 @@ namespace BExpress.Api.Controllers
     public class ProdutoController : PadraoController
     {
         private readonly IProdutoService _produtoService;
+        private readonly CloudStorageAccount _storageAccount;
 
-        public ProdutoController(IProdutoService produtoService)
+        public ProdutoController(IProdutoService produtoService, IConfiguration configuration)
         {
             _produtoService = produtoService;
+            _storageAccount = CloudStorageAccount.Parse(configuration.GetConnectionString("AzureStorage"));
         }
 
         [HttpGet]
@@ -129,7 +134,7 @@ namespace BExpress.Api.Controllers
         private async Task<string> SalvarImagemAsync(IFormFile imagem)
         {
             if (imagem is null) return "padrao.png";
-            var path = $"{Directory.GetCurrentDirectory()}\\Imagens";
+
             var extencao = Path.GetExtension(imagem.FileName);
 
             var extencoesPermitidas = new List<string>
@@ -143,12 +148,24 @@ namespace BExpress.Api.Controllers
                 throw new Exception("Imagem não permitida.");
 
             var novoNome = $"{Guid.NewGuid()}{extencao}";
-            var fullPath = $"{path}\\{novoNome}";
 
-            using (var stream = new FileStream(fullPath, FileMode.Create))
+            CloudBlobClient blobClient = _storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("images");
+            await container.CreateIfNotExistsAsync();
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(novoNome);
+
+            Image image = Image.FromStream(imagem.OpenReadStream(), true, true);
+            var newImage = new Bitmap(600, 400);
+            using (var g = Graphics.FromImage(newImage))
             {
-                await imagem.CopyToAsync(stream);
+                g.DrawImage(image, 0, 0, 600, 400);
             }
+
+            var stream = new MemoryStream();
+            newImage.Save(stream, ImageFormat.Jpeg);
+            stream.Position = 0;
+
+            await blockBlob.UploadFromStreamAsync(stream);
 
             return novoNome;
         }
