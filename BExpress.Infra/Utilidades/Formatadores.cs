@@ -9,5 +9,10 @@
             var newString = valor.Replace("R$", "").Replace(" ", "").Replace(".", "");
             return decimal.Parse(newString);
         }
+
+        public static string FormataDecimalParaReal(decimal valor)
+        {
+            return $"R$ {valor}";
+        }
     }
 }

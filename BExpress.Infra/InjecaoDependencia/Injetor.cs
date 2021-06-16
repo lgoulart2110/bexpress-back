@@ -26,6 +26,7 @@ namespace BExpress.Infra.InjecaoDependencia
             services.AddScoped<ICarrinhoComprasService, CarrinhoComprasService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IPedidoService, PedidoService>();
+            services.AddScoped<IRelatorioService, RelatorioService>();
         }
     }
 }
